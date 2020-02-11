@@ -1,0 +1,80 @@
+---
+title: "HW1_631"
+author: "Prashan Welipitiya"
+date: "2/5/2020"
+output: pdf_document
+---
+
+# Exercise 2.2
+```{r}
+x = c(-1, 6, 4, 6, 2, -3, 5)
+t.test(x, alternative = 'greater')
+```
+We get a p-value of 0.04 meaning we reject the null hypothesis stating that the drug has no effect. The drug improves fertility. 
+
+# Exercise 2.3
+1. Letting them choose may let the participants be happier to be in the experiment however it is not completely random and you may end up with most children picking diet B. 
+
+2. Taking the first 10 ensures that the two samples are equal however it is not always completely random as the order at which they come in could be a confounding variable. 
+
+3. Taking every other 10 keeps the two samples equal but it still could be seen as a confounding variable because it is not completely random because the order at which they come in could still play a role. 
+
+4. Tossing a coin ensures randomization however it could lead to different size samples which may lead to a lower power. 
+
+5. Choosing 10 at random ensures randomization. 
+
+# Exercise 2.4
+```{r}
+Reduced = c(256,159,149)
+Neutral = c(54,123,248)
+
+t.test(Neutral, Reduced, var.equal = TRUE)
+```
+
+Because the p-value is greater than 0.05, we fail to reject the null hypothesis.
+
+# Part 2
+ 
+```{r}
+ninetyfive = c(11.176,7.089,8.097,11.739,11.291,10.759,6.467,8.315)
+hundred = c(5.263,6.748,7.461,7.015,8.133,7.418,3.772,8.963)
+
+t.test(ninetyfive, hundred, var.equal = TRUE)
+```
+
+a. Yes, there is enough evidence to reject the null hypothesis and state that the higher baking temperature results in wafers with a different mean photoresist thickness. 
+
+b. The p-value is 0.018
+
+c. We are 95% confident that an increase from 95 C to 100 C will produce a greater mean thickness by between 0.4995 and 4.540 kA.
+
+e. 
+```{r}
+psd = sqrt(((sd(ninetyfive)^2) + (sd(hundred)^2))/2)
+power.t.test(n=8, delta=2.5, sd = psd)
+```
+Power is equal to 0.6945
+
+f. 
+```{r}
+power.t.test(delta = 1.5, sd = psd, power = 0.9)
+```
+A sample size of at least 35. 
+
+# Part 3
+```{r}
+# 2) Balanced design
+n1<- 8
+n2<- 8
+res<- array()
+alpha<- 0.05 # we set significance level=0.05
+MC<- 10000
+for(mc in 1:MC){
+data1<-rnorm(n1)
+data2<-rnorm(n2,0.5,1)
+res[mc]<- t.test(data1,data2,var.equal=TRUE)$"p.value"
+}
+mean(res<=2.5) #This is the estimated true power given mean difference is 0.5.
+
+```
+

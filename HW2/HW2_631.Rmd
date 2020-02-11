@@ -1,0 +1,39 @@
+---
+title: "HW2_631"
+author: "Prashan Welipitiya"
+date: "2/13/2020"
+output: pdf_document
+---
+# Exercise 1
+
+a.
+```{r}
+data1 = read.table("http://www.stat.umn.edu/~gary/book/fcdae.data/ex3.1",header=TRUE)
+#data1
+
+mu = mean(data1$y)
+mu1 = mean(data1[which(data1$diet==1),]$y)
+mu2 = mean(data1[which(data1$diet==2),]$y)
+mu3 = mean(data1[which(data1$diet==3),]$y)
+mu4 = mean(data1[which(data1$diet==4),]$y)
+a1 = mu1 - mu
+a2 = mu2 - mu
+a3 = mu3 - mu
+a4 = mu4 - mu
+
+# Overall mean
+mu
+
+# treatment effects
+a1
+a2
+a3
+a4
+
+```
+b. 
+```{r}
+# full.model<-aov(y~fdiet,data=data1)
+# anova(full.model)
+```
+
