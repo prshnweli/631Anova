@@ -9,7 +9,7 @@ output: pdf_document
 a.
 ```{r}
 data1 = read.table("http://www.stat.umn.edu/~gary/book/fcdae.data/ex3.1",header=TRUE)
-#data1
+# data1
 
 mu = mean(data1$y)
 mu1 = mean(data1[which(data1$diet==1),]$y)
@@ -32,8 +32,32 @@ a4
 
 ```
 b. 
+$H_0 : \alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0$  
+$H_A : \alpha_i \neq \alpha_j$ for at least for at least one pair (i,j). 
 ```{r}
-# full.model<-aov(y~fdiet,data=data1)
-# anova(full.model)
+data1$fdiet = as.factor(data1$diet)
+#  head(data1)
+# summary(data1)
+full.model<-aov(y~fdiet,data=data1)
+anova(full.model)
 ```
 
+Because the p value is less than 0.05 and the F value is greater than 1, we reject the null hypothesis and conclude that the data supports the claim that the group means are different. 
+
+# Exercise 3.
+```{r}
+data2 = read.table("http://www.stat.umn.edu/~gary/book/fcdae.data/ex3.3",header=TRUE)
+# data2
+```
+$H_0 : \alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = 0$  
+$H_A : \alpha_i \neq \alpha_j$ for at least for at least one pair (i,j). 
+
+```{r}
+data2$ftrt = as.factor(data2$trt)
+# head(data1)
+# summary(data1)
+full.model<-aov(mc~ftrt,data=data2)
+anova(full.model)
+```
+
+Both the F value is close to 1 and the p value is greater than 0.05 so we fail to reject the null hypothesis. 
