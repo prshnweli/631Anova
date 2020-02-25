@@ -1,0 +1,46 @@
+---
+title: "HW3"
+author: "Prashan A. Welipitiya"
+date: "2/25/2020"
+output: pdf_document
+---
+
+# Problem 2
+```{r}
+setwd("C:/Users/Prashan.Welipitiya/Downloads")
+data = read.table("car.dat", header = TRUE)
+#data
+```
+a. 
+```{r}
+data$ftype = as.factor(data$type)
+# head(data)
+# summary(data)
+full.model<-aov(response~ftype,data=data)
+anova(full.model)
+```
+
+$H_0 : \alpha_1 = \alpha_2 = \alpha_3 = \alpha_4 = \alpha_5 = \alpha_6 = 0$  
+$H_A : \alpha_i \neq \alpha_j$ for at least for at least one pair (i,j). 
+
+We reject the null hypothesis that all 6 models consume oil at the same rate. 
+
+b. 
+1. 
+```{r}
+library(emmeans)
+lsmType = lsmeans(full.model, ~ftype)
+summary(contrast(lsmType, list(impvsdom = c(-1/4,-1/4,1/2,-1/4,-1/4,1/2))),
+  infer=c(T,T))
+```
+
+The 95% confidence interval for $(\mu_1 + \mu_2 + \mu_4 + \mu_5)/4 - (\mu_3 + \mu_6)/2$ is (0.506,0.932). Because 0 is not in the interval, we reject the null hypothesis. We can learn from observing the confidence interval that domestic cars on average consume more oil. 
+
+2.
+```{r}
+lsmType = lsmeans(full.model, ~ftype)
+summary(contrast(lsmType, list(impvsdom = c(1/3,1/3,1/3,-1/3,-1/3,-1/3))),
+  infer=c(T,T))
+```
+The 95% confidence interval for $(\mu_1 + \mu_2 + \mu_3)/3 - (\mu_4 + \mu_5 +\mu_6)/3$ is (-0.967,-0.565). Because 0 is not in the interval, we reject the null hypothesis. We can learn from observing the confidence interval that less expensive cars on average consume less oil. 
+
