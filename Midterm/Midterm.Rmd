@@ -1,0 +1,20 @@
+---
+title: "Midterm 631"
+author: "Prashan A. Welipitiya"
+date: "3/12/2020"
+output: pdf_document
+---
+
+# Battery Use Problem
+
+```{r}
+data = read.csv("midterm.csv")
+data
+```
+## a. 
+
+```{r}
+data$ftype = as.factor(data$type)
+model1 = aov(response~ftype, data = data)
+anova(model1)
+```
